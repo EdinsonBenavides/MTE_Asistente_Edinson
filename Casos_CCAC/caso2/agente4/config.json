@@ -1,0 +1,28 @@
+{
+    "topics_public": {
+        "1": "agente1",
+        "2": "agente2",
+        "3": "agente3",
+        "5": "agente5",
+        "6": "agente6"
+    },
+    "topic_suscriptor": "agente4",
+    "ID_agente": "4",
+    "num_public_block": 100000,
+    "broker": "",
+    "userMQTT": "",
+    "passwordMQTT": "",
+    "port": 1883,
+    "parametros": {
+        "a": 39.19,
+        "b": 696.1,
+        "c": 2.46,
+        "d": 0,
+        "up_limit": 271,
+        "down_limit": 50
+    },
+    "admin": "admin",
+    "topic_admin": "admin",
+    "account_address": "",
+    "private_key": ""
+}
