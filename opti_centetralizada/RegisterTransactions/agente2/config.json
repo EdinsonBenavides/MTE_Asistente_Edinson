@@ -1,0 +1,30 @@
+{
+    "topics_public": {
+        "1":"agente1",
+        "2":"agente2",
+        "3":"agente3",
+        "4":"agente4",
+        "5":"agente5",
+        "6":"agente6"
+    },
+    "address":{"1":"0xDa14DC0256603A14a9F701Ad90043Cd8Cd975d0B",
+        "2":"0x18cc058f50F5Bd95716c3AD5996D27cDE81bC94F",
+        "3":"0xdfB4880703947c6Cc52FCa23BC8D6A3A74b41e92",
+        "4":"0xB3a2aC8Fd12056B87634264265C32d818dE233be",
+        "5":"0x5a4a2f6eF74D1B4919461fa966EAa1D274A0d9ff",
+        "6":"0x4916cEB118Dd7D36C5fA882125497d7de9fBE582"
+    },
+    "comprador":false,
+    "topic_suscriptor":"agente2",
+    "ID_agente":"2",
+    "broker": "10.10.10.76",
+    "port": 1883,
+    "parametros":{
+        "a":28.77,
+        "b":903.2,
+        "c":0.71,
+        "d":0
+    },
+    "admin":"admin",
+    "state_optimizacion":false
+}

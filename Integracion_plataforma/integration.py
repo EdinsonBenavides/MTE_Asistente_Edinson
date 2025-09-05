@@ -1,3 +1,4 @@
+import time
 import requests
 """ El esquema esta realizado para que el agente central realice la optimizacion 
 y tambien realice el pago de la energia comprada a cada agente contribuidor.
@@ -8,7 +9,8 @@ urls = {"autentication": "http://10.10.10.76:3601/api_authentication/",
         "get_blocks": "http://10.10.10.76:3601/get_blocks/",
         "demand_energy": "http://10.10.10.76:3601/demand_energy/",
         "add_tokens":"http://10.10.10.76:3601/add_tokens/",
-        "make_transaction": "http://10.10.10.76:3601/make_transaction/"}
+        "make_transaction": "http://10.10.10.76:3601/make_transaction/",
+       "get_org_values":"http://10.10.10.76:3601/get_org_values/"}
 
 credentials = {
     "email": "edinson@mte.com",
@@ -71,6 +73,33 @@ def make_transaction_price(id_user, id_user2,money,token):
     response_json = response.json()
     print(response_json)
     
+def get_params_org(n_agentes):
+    a = [0]*n_agentes
+    b = [0]*n_agentes
+    c = [0]*n_agentes
+    up_lim = [0]*n_agentes
+    down_lim = [0]*n_agentes
+    
+    token = login(credentials, url = urls["autentication"])
+    for i in range(n_agentes):
+        json_data = {
+          "id_organization": i + 1,
+          "token": token
+        }
+        # A GET request to the API
+        response = requests.post(urls["get_org_values"], json=json_data)
+        
+        # Print the response
+        response_json = response.json()[0]
+        
+
+        a[i] = response_json["cost_a"]/100
+        b[i] = response_json["cost_b"]/100
+        c[i] = response_json["cost_c"]/100
+        up_lim[i] = response_json["min_gen_limit"]
+        down_lim[i] = response_json["max_gen_limit"]
+        
+    return a,b,c,up_lim,down_lim
 
 
 ###############################################
@@ -90,16 +119,14 @@ def X_k(fi,sumX,f_mean,x_gorr,p):
 
 
 #### Lectura de parametros
-a = ([64.67, 65.46, 190.92, 39.19, 104.44, 28.77])
-b = ([795.5, 1448.6, 838.1, 696.1, 1150.5, 903.2])
-c = ([1.15, 0.82, 1.53, 2.46, 0, 0.71])
-x0 = ([350, 300, 250, 200, 50])
 
 P_d = 1150
 numAgentes = 5
 
-up_limits = ([500,362,315,271,60,400])
-down_limits = ([100,82,65,50,0,20])
+a,b,c,up_limits,down_limits = get_params_org(numAgentes)
+
+x0 = ([350, 300, 250, 200, 50])
+
 
 ### Inicialización de iteracion 0
 x_gorr_k = ([0]*numAgentes)
@@ -124,7 +151,6 @@ for k in range(1000):
     sumX = sum(x_gorr_k)
     f_mean = sum(([fi_k[i]*x_gorr_k[i] for i in range(numAgentes)]))
 
-
 print(P_k)
 
 ###############################################################################
@@ -133,6 +159,7 @@ print(P_k)
 
 # Poner ID de cada agente en la lista, segun corresponda
 IDs_agentes = [1093458050, 1233193101, 1233193102, 1233193103, 1233193104] 
+
 # Se define el precio por unidad de KW
 price_unit_kW = 100
 
@@ -141,6 +168,7 @@ token = login(credentials, url = urls["autentication"])
 for i in range(numAgentes):
     print(price_unit_kW*P_k[i])
     make_transaction_price(owner_ID,IDs_agentes[i],price_unit_kW*P_k[i],token)
+    time.sleep(2)
 
 response = requests.post(urls["get_blocks"], json={"token":token})
 # Print the response
