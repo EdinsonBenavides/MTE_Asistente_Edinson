@@ -1,0 +1,21 @@
+{
+    "topics_public": {
+        "1":"udenar",
+        "2":"cesmag",
+        "3":"cooperativa",
+        "4":"mariana",
+        "5":"departamental"
+    },
+    "topic_suscriptor":"admin",
+    "ID_agente":"0",
+    "broker": "10.10.10.76",
+    "port": 1883,
+    "parametros":{
+        "a":28.77,
+        "b":903.2,
+        "c":0.71,
+        "d":0
+    },
+    "admin":"admin",
+    "state_optimizacion":false
+}
